@@ -1,29 +1,34 @@
 {
-  "name": "movie-browser",
-  "version": "1.1.0",
-  "description": "HRSF77/78 Review: Movie Browser",
-  "author": "Hack Reactor <curriculum.team@hackreactor.com>",
-  "license": "UNLICENSED",
-  "private": true,
+  "name": "badmovies",
+  "version": "1.0.0",
+  "description": "bad movies practice for junior developers",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js",
-    "react-dev": "webpack --config ./webpack.config.js  -w"
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon server/index.js"
   },
+  "author": "Peter Park",
+  "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.13.10",
-    "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
-    "@babel/preset-react": "^7.12.13",
-    "babel-loader": "^8.2.2",
-    "nodemon": "^2.0.7",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.5.0"
+    "babel-core": "^6.23.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "express": "^4.17.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "underscore": "^1.12.1"
+    "axios": "^0.18.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.0",
+    "jquery": "^3.1.1",
+    "mongodb": "^3.1.4",
+    "mongoose": "^5.2.12",
+    "mysql": "^2.15.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "request": "^2.83.0"
   }
 }
