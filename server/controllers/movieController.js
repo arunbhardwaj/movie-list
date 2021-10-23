@@ -1,4 +1,4 @@
-const MovieModel = require('../models/movieModel.js');
+const MovieModel = require('../models/movieModel.js').MovieModel;
 const apiHelpers = require('../helpers/apiHelpers.js');
 const axios = require('axios');
 const token = require('../../auth.js').token;
@@ -42,16 +42,18 @@ module.exports = {
 
   // ('/movies/save')
   saveMovie: (req, res) => {
-    console.log("🚀 ~ file: movieController.js ~ line 46 ~ req.body", req.body)
     let movie = req.body;
-    movieModel.save(movie);
-    res.status(201).end();
+    MovieModel.findOneAndUpdate({id: movie.id}, movie, {upsert: true})
+      .then(() => res.status(201).end());
+
   },
 
   // ('/movies/delete')
   deleteMovie: (req, res) => {
+    let movie = req.body;
+    console.log('deleting ', movie)
+    MovieModel.findOneAndDelete({id: movie.id})
+      .then(() => res.status(200).send());
 
-
-    res.end();
   }
 }

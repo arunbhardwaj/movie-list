@@ -48,12 +48,12 @@ const Movie = ({movie, showFaves, saveMovie = ()=>{}, deleteMovie = ()=>{}}) => 
             ? () => {
               setIsFavorited(false);
               changeSelector('+');
-              return deleteMovie(movie)
+              deleteMovie(movie)
             }
             : () => {
               setIsFavorited(true);
               changeSelector('\u2713');
-              return saveMovie(movie)
+              saveMovie(movie)
             }
           }>{(isFavorited) ? '\u2713' : '+'}</button>
         </div>

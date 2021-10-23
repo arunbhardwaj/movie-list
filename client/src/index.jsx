@@ -32,7 +32,7 @@ class App extends React.Component {
   saveMovie(movie) { // O(n)
     // same as above but do something diff
     axios.post('http://localhost:3000/movies/save', movie)
-      .then(() => console.log('saved'))
+      .then(() => console.log('Saved.'))
       .catch(err => console.error('Error while saving >>>', err));
 
     let index = this.state.favorites.indexOf(movie);
@@ -44,9 +44,14 @@ class App extends React.Component {
   }
 
   deleteMovie(movie) { // O(n)
+    console.log("🚀 ~ file: index.jsx ~ line 47 ~ App ~ deleteMovie ~ movie", movie)
     // splice returns array of elements REMOVED
-    axios.delete('http://localhost:3000/movies/save', movie)
-      .then(() => console.log('saved'));
+    axios
+      .delete('http://localhost:3000/movies/delete', {
+        data: movie
+      })
+      .then(() => console.log('Deleted.'))
+      .catch(err => console.error('Error while deleting >>>', err));
 
     let newFavorites = [...this.state.favorites];
     let index = newFavorites.indexOf(movie);

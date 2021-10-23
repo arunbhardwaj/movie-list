@@ -1,35 +1,38 @@
 //
 
 const mongoose = require('mongoose');
-let dbURI = (process.env.MONGODB_URI) ? process.env.MONGODB_URI : 'mongodb://localhost:27017/badmovies';
+const dbURI = (process.env.MONGODB_URI) ? process.env.MONGODB_URI : 'mongodb://localhost:27017/badmovies';
+
 mongoose.connect(dbURI, { useNewUrlParser: true })
-  .then(() => console.log('connected to mongodb'))
+  .then((e) => console.log(e))
   .catch(err => console.error('error connecting to mongodb >>>', err));
 
 
 const db = mongoose.connection;
 
+// You could do `mongoose.promise = require('bluebird')` and it'd use bluebird promises
+// Makes mongoose use ES6 promises
 mongoose.Promise = Promise;
+
+// Listening for errors and connection
 db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', () => {
   console.log('Connected to db...');
-  console.log(db.pass);
 })
 
-
-
+// TODO;
 const userSchema = new mongoose.Schema({
 
 })
 
 const movieSchema = new mongoose.Schema({
-  genre_ids: Array,
-  id: Number,
   title: String,
+  id: Number,
+  release_date: String,
+  genre_ids: Array,
   overview: String,
   poster_path: String,
   vote_average: Number,
-  release_date: String
 })
 
 
