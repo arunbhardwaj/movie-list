@@ -1,4 +1,4 @@
-const movieModel = require('../models/movieModel.js');
+const MovieModel = require('../models/movieModel.js');
 const apiHelpers = require('../helpers/apiHelpers.js');
 const axios = require('axios');
 const token = require('../../auth.js').token;
@@ -13,7 +13,6 @@ module.exports = {
   postSearch: (req, res) => {
     // ('/movies/search')
     let genre = req.body.genre;
-    console.log("🚀 ~ file: movieController.js ~ line 16 ~ genre", genre)
     axios.get('https://api.themoviedb.org/3/discover/movie', {
       headers: {'Authorization': 'Bearer ' + token},
       params: {
@@ -21,7 +20,9 @@ module.exports = {
         with_genres: genre.id
       }
     })
-      .then(results => res.json(results.data).end())
+      .then(results => {
+        res.json(results.data).end();
+      })
       .catch(err => console.error('Error retrieving movies of genre from api >>>', err));
 
     // use this endpoint to search for movies by genres, you will need an API key
@@ -41,11 +42,16 @@ module.exports = {
 
   // ('/movies/save')
   saveMovie: (req, res) => {
-
+    console.log("🚀 ~ file: movieController.js ~ line 46 ~ req.body", req.body)
+    let movie = req.body;
+    movieModel.save(movie);
+    res.status(201).end();
   },
 
   // ('/movies/delete')
   deleteMovie: (req, res) => {
 
+
+    res.end();
   }
 }

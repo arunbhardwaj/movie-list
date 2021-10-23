@@ -1,11 +1,11 @@
 //
 
 const mongoose = require('mongoose');
-if(process.env.MONGODB_URI){
-  mongoose.connect(process.env.MONGODB_URI)
-} else{
-  mongoose.connect('mongodb://localhost:27017/badmovies', { useNewUrlParser: true });
-}
+let dbURI = (process.env.MONGODB_URI) ? process.env.MONGODB_URI : 'mongodb://localhost:27017/badmovies';
+mongoose.connect(dbURI, { useNewUrlParser: true })
+  .then(() => console.log('connected to mongodb'))
+  .catch(err => console.error('error connecting to mongodb >>>', err));
+
 
 const db = mongoose.connection;
 
@@ -23,7 +23,13 @@ const userSchema = new mongoose.Schema({
 })
 
 const movieSchema = new mongoose.Schema({
-
+  genre_ids: Array,
+  id: Number,
+  title: String,
+  overview: String,
+  poster_path: String,
+  vote_average: Number,
+  release_date: String
 })
 
 
@@ -35,5 +41,5 @@ const MovieModel = db.model('Movies', movieSchema);
 // const UserModel = mongoose.model('Users', userSchema);
 // const MovieModel = mongoose.model('Movies', movieSchema);
 
-
+module.exports.MovieModel = MovieModel;
 module.exports.db = db

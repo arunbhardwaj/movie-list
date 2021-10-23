@@ -11,7 +11,7 @@ class App extends React.Component {
   	super(props)
   	this.state = {
       movies: [],
-      favorites: [{deway: "favorites"}],
+      favorites: [], // VERY WEIRD FUNCTIONALITY, check marks do not stick with title but rather their location in favorite array {deway: "favorites"}
       showFaves: false,
     };
 
@@ -30,10 +30,12 @@ class App extends React.Component {
   }
 
   saveMovie(movie) { // O(n)
-    console.log("🚀 ~ file: index.jsx ~ line 33 ~ App ~ saveMovie ~ movie", movie)
     // same as above but do something diff
+    axios.post('http://localhost:3000/movies/save', movie)
+      .then(() => console.log('saved'))
+      .catch(err => console.error('Error while saving >>>', err));
+
     let index = this.state.favorites.indexOf(movie);
-    console.log("🚀 ~ file: index.jsx ~ line 35 ~ App ~ saveMovie ~ index", index)
     if (index === -1) {
       this.setState({
         favorites: [...this.state.favorites, movie]
@@ -43,6 +45,9 @@ class App extends React.Component {
 
   deleteMovie(movie) { // O(n)
     // splice returns array of elements REMOVED
+    axios.delete('http://localhost:3000/movies/save', movie)
+      .then(() => console.log('saved'));
+
     let newFavorites = [...this.state.favorites];
     let index = newFavorites.indexOf(movie);
     if (index > -1) {

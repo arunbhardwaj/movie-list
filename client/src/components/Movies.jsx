@@ -34,14 +34,28 @@ const Movie = ({movie, showFaves, saveMovie = ()=>{}, deleteMovie = ()=>{}}) => 
 
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [selector, changeSelector] = useState('+');
 
 
   return (
     <li className="movie_item">
+
       <img src={imgUrl} onLoad={() => {}}/>
       <div className="movie_description">
         <div>
-          <button onClick={showFaves ? () => deleteMovie(movie) : () => saveMovie(movie)}>+</button>
+          <button onClick={showFaves
+            ? () => {
+              setIsFavorited(false);
+              changeSelector('+');
+              return deleteMovie(movie)
+            }
+            : () => {
+              setIsFavorited(true);
+              changeSelector('\u2713');
+              return saveMovie(movie)
+            }
+          }>{(isFavorited) ? '\u2713' : '+'}</button>
         </div>
         <h2>{title}</h2>
 
