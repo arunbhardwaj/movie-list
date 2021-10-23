@@ -17,7 +17,7 @@ class Movies extends React.Component {
       <ul className="movies">
         { this.props.movies.map((movie, idx) => {
           return (
-            <Movie key={idx} saveMovie={this.props.saveMovie} movie={movie}/>
+            <Movie key={idx} saveMovie={this.props.saveMovie} deleteMovie={this.props.deleteMovie} movie={movie} showFaves={this.props.showFaves}/>
           )
         })}
       </ul>
@@ -25,9 +25,7 @@ class Movies extends React.Component {
   }
 }
 
-const Movie = ({movie, saveMovie = ()=>{}}) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
+const Movie = ({movie, showFaves, saveMovie = ()=>{}, deleteMovie = ()=>{}}) => {
   let {poster_path, release_date, title, vote_average} = movie;
   let year = (release_date) ? release_date.slice(0, 4) : 1969;
   let imgUrl = (poster_path)
@@ -35,12 +33,15 @@ const Movie = ({movie, saveMovie = ()=>{}}) => {
     : "https://lh3.googleusercontent.com/97gnjRiv2zIRnDupzfxYFoI-6zlIK3jKgb6KOCDf_tjWkY9epbITdSFIbiKhuccOqQ=w300"
 
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+
   return (
     <li className="movie_item">
-      <img src={imgUrl} />
+      <img src={imgUrl} onLoad={() => {}}/>
       <div className="movie_description">
         <div>
-          <button onClick={() => saveMovie(movie)}>+</button>
+          <button onClick={showFaves ? () => deleteMovie(movie) : () => saveMovie(movie)}>+</button>
         </div>
         <h2>{title}</h2>
 

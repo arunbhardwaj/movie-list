@@ -10,13 +10,13 @@ class App extends React.Component {
   constructor(props) {
   	super(props)
   	this.state = {
-      movies: [{deway: "movies"}],
+      movies: [],
       favorites: [{deway: "favorites"}],
       showFaves: false,
     };
 
     // you might have to do something important here!
-    // I refused to bind
+    // I refuse to bind.
   }
 
   getMovies(genre) {
@@ -29,20 +29,26 @@ class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  saveMovie(movie) {
-    // same as above but do something diff
-    console.log(movie)
-    this.setState({
-      favorites: [...this.state.favorites, movie]
-    })
-  }
-
-  deleteMovie(movie) {
+  saveMovie(movie) { // O(n)
+    console.log("🚀 ~ file: index.jsx ~ line 33 ~ App ~ saveMovie ~ movie", movie)
     // same as above but do something diff
     let index = this.state.favorites.indexOf(movie);
-    if (index !== -1) {
+    console.log("🚀 ~ file: index.jsx ~ line 35 ~ App ~ saveMovie ~ index", index)
+    if (index === -1) {
       this.setState({
-        favorites: this.state.favorites.splice(index, 1)
+        favorites: [...this.state.favorites, movie]
+      })
+    }
+  }
+
+  deleteMovie(movie) { // O(n)
+    // splice returns array of elements REMOVED
+    let newFavorites = [...this.state.favorites];
+    let index = newFavorites.indexOf(movie);
+    if (index > -1) {
+      newFavorites.splice(index, 1);
+      this.setState({
+        favorites: newFavorites
       })
     }
   }
@@ -61,7 +67,7 @@ class App extends React.Component {
 
         <div className="main">
           <Search getMoviesFromGenre={(genre) => this.getMovies(genre)} swapFavorites={() => this.swapFavorites()} showFaves={this.state.showFaves}/>
-          <Movies saveMovie={(e) => this.saveMovie(e)} movies={this.state.showFaves ? this.state.favorites : this.state.movies} showFaves={this.state.showFaves}/>
+          <Movies saveMovie={(e) => this.saveMovie(e)} deleteMovie={(e) => this.deleteMovie(e)} movies={this.state.showFaves ? this.state.favorites : this.state.movies} showFaves={this.state.showFaves}/>
         </div>
       </div>
     );

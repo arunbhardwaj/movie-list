@@ -36,18 +36,13 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search">
-        <button
-          onClick={() => {
-            this.props.swapFavorites();
-          }}
-        >
+
+        <button onClick={() => {this.props.swapFavorites()}}>
           {this.props.showFaves ? 'Show Results' : 'Show Favorites'}
         </button>
-        <br />
-        <br />
 
-        {/* Make the select options dynamic from genres !!! */}
-        {/* How can you tell which option has been selected from here? */}
+        <br />
+        <br />
 
         <select value={this.state.selected} onChange={(e) => this.handleSelectChange(e)}>
           {this.state.genres.map((genre, idx) => {
@@ -61,9 +56,7 @@ class Search extends React.Component {
         <br />
         <br />
 
-        <button
-          onClick={() => this.props.getMoviesFromGenre({id: this.state.id, name: this.state.selected})}
-        >
+        <button onClick={() => this.props.getMoviesFromGenre({id: this.state.id, name: this.state.selected})}>
           Search
         </button>
       </div>
