@@ -19,27 +19,31 @@ class Movies extends React.Component {
           return (
             <Movie key={idx} saveMovie={this.props.saveMovie} movie={movie}/>
           )
-          })
-        }
+        })}
       </ul>
     )
   }
 }
 
 const Movie = ({movie, saveMovie = ()=>{}}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   let {poster_path, release_date, title, vote_average} = movie;
   let year = (release_date) ? release_date.slice(0, 4) : 1969;
   let imgUrl = (poster_path)
     ? `https://image.tmdb.org/t/p/original${(poster_path)}`
     : "https://lh3.googleusercontent.com/97gnjRiv2zIRnDupzfxYFoI-6zlIK3jKgb6KOCDf_tjWkY9epbITdSFIbiKhuccOqQ=w300"
 
-  // const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <li className="movie_item">
       <img src={imgUrl} />
       <div className="movie_description">
+        <div>
+          <button onClick={() => saveMovie(movie)}>+</button>
+        </div>
         <h2>{title}</h2>
+
         <section className="movie_details">
           <div className="movie_year">
             <span className="title">Year</span>
@@ -51,7 +55,7 @@ const Movie = ({movie, saveMovie = ()=>{}}) => {
           </div>
         </section>
       </div>
-      <button onClick={() => saveMovie(movie)}>+Add to Fav</button>
+
     </li>
   )
 }
