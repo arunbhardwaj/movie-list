@@ -3,36 +3,69 @@ import axios from 'axios';
 
 class Search extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      genres: []
+      genres: [],
+      id: '28',
+      selected: 'action',
     };
   }
+
+  componentDidMount() {
+    this.getGenres()
+      .then((results) => this.setState({ genres: results.data.genres }))
+      .catch((err) => console.error('error fetching genres >>>', err));
+  }
+
   getGenres() {
     //make an axios request in this component to get the list of genres from your endpoint GET GENRES
-    axios
-      .get('http://localhost:3000/movies/genres')
-      .then(results => console.log(results));
+    return axios.get('http://localhost:3000/movies/genres');
+  }
+
+  handleSelectChange(e) {
+    // e.persist();
+    // console.log(e);
+    // console.log(e.target[e.target.selectedIndex]);
+    // console.log(e.target[e.target.selectedIndex].attributes.id.value);
+    this.setState({
+      id: e.target[e.target.selectedIndex].attributes.id.value,
+      selected: e.target.value
+    });
   }
 
   render() {
     return (
       <div className="search">
-        <button onClick={() => {this.props.swapFavorites()}}>{this.props.showFaves ? "Show Results" : "Show Favorites"}</button>
-        <br/><br/>
+        <button
+          onClick={() => {
+            this.props.swapFavorites();
+          }}
+        >
+          {this.props.showFaves ? 'Show Results' : 'Show Favorites'}
+        </button>
+        <br />
+        <br />
 
         {/* Make the select options dynamic from genres !!! */}
         {/* How can you tell which option has been selected from here? */}
 
-        <select>
-          <option value="theway">The Way</option>
-          <option value="thisway">This Way</option>
-          <option value="thatway">That Way</option>
+        <select value={this.state.selected} onChange={(e) => this.handleSelectChange(e)}>
+          {this.state.genres.map((genre, idx) => {
+            return (
+              <option key={idx} id={genre.id} value={genre.name.toLowerCase()}>
+                {genre.name}
+              </option>
+            );
+          })}
         </select>
-        <br/><br/>
+        <br />
+        <br />
 
-        <button>Search</button>
-
+        <button
+          onClick={() => this.props.getMoviesFromGenre({id: this.state.id, name: this.state.selected})}
+        >
+          Search
+        </button>
       </div>
     );
   }

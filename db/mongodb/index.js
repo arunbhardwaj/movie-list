@@ -27,7 +27,7 @@ const movieSchema = new mongoose.Schema({
 })
 
 
-// Model is a
+// Model is a table/database, an instance of model is a document
 const UserModel = db.model('Users', userSchema);
 const MovieModel = db.model('Movies', movieSchema);
 
